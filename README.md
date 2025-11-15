@@ -1,5 +1,5 @@
-# EX-NO-7-Implement-DES-Encryption-and-Decryption
-# DATE:
+# EX-NO-7-Implement-DES-Encryption
+
 ## Aim:
 
 To use the Data Encryption Standard (DES) algorithm for a practical application, such as securing sensitive data transmission in financial transactions.
@@ -14,39 +14,55 @@ To use the Data Encryption Standard (DES) algorithm for a practical application,
 ## Program:
 ```
 #include <stdio.h>
-#include <string.h>
-
-// XOR encryption function
-void xor_encrypt_decrypt(char *input, char *key) {
-    int input_len = strlen(input);
-    int key_len = strlen(key);
-
-    for (int i = 0; i < input_len; i++) {
-        input[i] = input[i] ^ key[i % key_len]; // XOR encryption
-    }
-}
-
-int main() {
-    char url[] = "https://www.flipkart.com/";
-    char key[] = "secretkey"; // Simple key for XOR encryption
-
-    printf("Original URL: %s\n", url);
-
-    // Encrypt the URL
-    xor_encrypt_decrypt(url, key);
-    printf("Encrypted URL: %s\n", url);
-
-    // Decrypt the URL (since XOR is reversible using the same key)
-    xor_encrypt_decrypt(url, key);
-    printf("Decrypted URL: %s\n", url);
-
-    return 0;
-}
+ #include <string.h>
+ void encrypt(char *message, char *key, char *encryptedMessage, int
+ messageLength) {
+ int keyLength = strlen(key);
+ for (int i = 0; i < messageLength; i++) {
+ encryptedMessage[i] = message[i] ^ key[i % keyLength];
+ }
+ encryptedMessage[messageLength] = '\0'; 
+ }
+ void decrypt(char *encryptedMessage, char *key, char *decryptedMessage, int
+ messageLength) {
+ int keyLength = strlen(key);
+ for (int i = 0; i < messageLength; i++) {
+ decryptedMessage[i] = encryptedMessage[i] ^ key[i % keyLength];
+ }
+ decryptedMessage[messageLength] = '\0';
+ }
+ int main() {
+ char message[100];
+ char key[100];
+ printf("\n**Simulation of DES encryption and decryption\n\n");
+ printf("Enter the message to encrypt: \n");
+ fgets(message, sizeof(message), stdin);
+ message[strcspn(message, "\n")] = '\0'; 
+ printf("Enter the encryption key: \n");
+ fgets(key, sizeof(key), stdin);
+ key[strcspn(key, "\n")] = '\0'; 
+ int messageLength = strlen(message);
+ char encryptedMessage[100];
+ char decryptedMessage[100];
+ // Encrypt the message
+ encrypt(message, key, encryptedMessage, messageLength);
+ printf("Original Message: %s\n", message);
+ printf("Encrypted Message: ");
+ for (int i = 0; i < messageLength; i++) {
+ printf("%02X ", (unsigned char)encryptedMessage[i]);
+ }
+ printf("\n");	
+ decrypt(encryptedMessage, key, decryptedMessage, messageLength);
+ printf("Decrypted Message: %s\n", decryptedMessage);
+ return 0;
+ }
 ```
+
 ## Output:
-![image](https://github.com/user-attachments/assets/587eb7bb-b65d-418d-8731-7d7e8bfea851)
+<img width="553" height="315" alt="Screenshot 2025-11-15 084654" src="https://github.com/user-attachments/assets/164a8bc4-9acb-4c24-b86c-2016e6db6451" />
+
+
 
 
 ## Result:
   The program is executed successfully
-
